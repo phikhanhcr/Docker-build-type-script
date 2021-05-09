@@ -1,0 +1,26 @@
+version: "3"
+
+services: 
+  server:
+    build: .
+    restart: always
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 3000:3000
+    environment: 
+      - NODE_ENV=development
+      - ENVIRONMENT="dev"
+      - ADMIN=606fffba0b386909046930e1a,606fffba0b386909046930ea,609007f4f7aea279ba0a546c
+      - JWT_SECRET=b4f6aae97a2cecb24e1e90f6d0e84aaff529d80d
+      - MONGO_DB=mongodb://mongo:27017/landingPage
+    external_links: 
+      - mongo
+    depends_on: 
+      - mongo
+
+  mongo:
+    container_name: mongo
+    image: mongo:4.2.5
+    ports:
+      - '27017:27017'
